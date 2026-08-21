@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"trainee-go-tasks/money"
+)
 
 func KillerFeature() {
 	fmt.Println("dvevevrg")
@@ -8,4 +11,5 @@ func KillerFeature() {
 
 func main() {
 	KillerFeature()
+	money.MoneyIncrease()
 }

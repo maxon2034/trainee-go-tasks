@@ -2,7 +2,7 @@ package repeat
 
 func Remove(s []string) []string {
 	m := make(map[string]bool)
-	res := []string{}
+	var res []string
 	for _, v := range s {
 		if m[v] == true {
 			continue

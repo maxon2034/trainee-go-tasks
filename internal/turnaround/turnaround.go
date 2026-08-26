@@ -5,7 +5,7 @@ import "strings"
 func Do(s string) string {
 	var word []rune
 	var turnaround []rune
-	var res []rune
+	res := make([]rune, 0, len([]rune(s)))
 
 	for i, v := range s {
 		if s[i] == ' ' {
@@ -31,7 +31,7 @@ func Do(s string) string {
 func DoLib(s string) string {
 	split := strings.Split(s, " ")
 	var turnaround []rune
-	var res []string
+	res := make([]string, 0, len(split))
 	for _, v := range split {
 		for l := range v {
 			turnaround = append(turnaround, []rune(v)[len([]rune(v))-1-l])

@@ -11,14 +11,18 @@ func Is(s string) bool {
 	}
 	s = strings.Join(split, "")
 	s = strings.ToLower(s)
-	for i, v := range []rune(s) {
-		if len([]rune(s))-i >= i && v == []rune(s)[(len([]rune(s))-1)-i] {
-			if (len([]rune(s))-1)-i == i {
-				break
-			}
-		} else {
+
+	runes := []rune(s)
+
+	left, right := 0, len(runes)-1
+
+	for left < right {
+		if runes[left] != runes[right] {
 			return false
 		}
+		left++
+		right--
 	}
+
 	return true
 }

@@ -2,18 +2,17 @@ package palindrome
 
 import (
 	"strings"
+	"unicode"
 )
 
 func Is(s string) bool {
-	split := strings.Split(s, " ")
-	for i, v := range split {
-		split[i] = strings.Trim(v, ".,?!")
-	}
-	s = strings.Join(split, "")
 	s = strings.ToLower(s)
-
-	runes := []rune(s)
-
+	runes := make([]rune, 0, len(s))
+	for _, r := range s {
+		if unicode.IsLetter(r) || unicode.IsDigit(r) {
+			runes = append(runes, r)
+		}
+	}
 	left, right := 0, len(runes)-1
 
 	for left < right {

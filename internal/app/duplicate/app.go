@@ -7,7 +7,7 @@ import (
 )
 
 func Run() {
-	s := []string{
+	ss := []string{
 		"aaa",
 		"bbb",
 		"ccc",
@@ -15,8 +15,8 @@ func Run() {
 		"ddd",
 		"ddd",
 	}
-	fmt.Println("before:", s)
-	res := duplicate.Remove(s)
+	fmt.Println("before:", ss)
+	res := duplicate.Remove(ss)
 
 	fmt.Println(" after:", res)
 }

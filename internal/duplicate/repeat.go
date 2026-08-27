@@ -1,4 +1,4 @@
-package repeat
+package duplicate
 
 func Remove(s []string) []string {
 	m := make(map[string]bool)

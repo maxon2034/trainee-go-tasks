@@ -3,7 +3,7 @@ package app
 import (
 	"fmt"
 
-	"github.com/maxon2034/trainee-go-tasks/internal/repeat"
+	"github.com/maxon2034/trainee-go-tasks/internal/duplicate"
 )
 
 func Run() {
@@ -16,7 +16,7 @@ func Run() {
 		"ddd",
 	}
 	fmt.Println("before:", s)
-	res := repeat.Remove(s)
+	res := duplicate.Remove(s)
 
 	fmt.Println(" after:", res)
 }

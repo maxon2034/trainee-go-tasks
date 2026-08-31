@@ -2,7 +2,6 @@ package app
 
 import (
 	"context"
-	"fmt"
 	"log/slog"
 	"os"
 
@@ -11,15 +10,9 @@ import (
 
 func Run() {
 	ctx := context.Background()
+	s := os.Stdout
 
-	file, err := os.OpenFile("log.json", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
-	if err != nil {
-		fmt.Println("Error in creating file:", err)
-		return
-	}
-	defer file.Close()
-
-	logger := slogutil.NewLogger(*file)
+	logger := slogutil.NewLogger(s)
 	logger.Log(ctx, slog.LevelDebug, "aaa", "key1", "val1")
 	logger.Log(ctx, slog.LevelInfo, "bbb", "key2", "val2")
 	logger.Log(ctx, slog.LevelWarn, "ccc", "key3", "val3")

@@ -40,11 +40,12 @@ func (c *CompositeHandler) Handle(ctx context.Context, r slog.Record) error {
 }
 
 func (c *CompositeHandler) WithAttrs(attrs []slog.Attr) slog.Handler {
-	for i, v := range c.handlers {
-		c.handlers[i] = v.WithAttrs(attrs)
+	var ca CompositeHandler
+	for _, v := range c.handlers {
+		ca.handlers = append(ca.handlers, v.WithAttrs(attrs))
 	}
 
-	return c
+	return &ca
 }
 
 func (c *CompositeHandler) WithGroup(name string) slog.Handler {

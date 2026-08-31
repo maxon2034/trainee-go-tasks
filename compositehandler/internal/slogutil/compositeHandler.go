@@ -48,10 +48,11 @@ func (c *CompositeHandler) WithAttrs(attrs []slog.Attr) slog.Handler {
 }
 
 func (c *CompositeHandler) WithGroup(name string) slog.Handler {
-	for i, v := range c.handlers {
-		c.handlers[i] = v.WithGroup(name)
+	var cg CompositeHandler
+	for _, v := range c.handlers {
+		cg.handlers = append(cg.handlers, v.WithGroup(name))
 	}
-	return c
+	return &cg
 }
 
 func (c *CompositeHandler) Add(h slog.Handler) *CompositeHandler {

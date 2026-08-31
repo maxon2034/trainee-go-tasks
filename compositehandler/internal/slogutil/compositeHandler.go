@@ -25,11 +25,13 @@ func (c *CompositeHandler) Enabled(ctx context.Context, l slog.Level) bool {
 
 func (c *CompositeHandler) Handle(ctx context.Context, r slog.Record) error {
 	var errs []error
+	var rc slog.Record
 	for _, v := range c.handlers {
-		if !v.Enabled(ctx, r.Level) {
+		rc = r.Clone()
+		if !v.Enabled(ctx, rc.Level) {
 			continue
 		}
-		err := v.Handle(ctx, r)
+		err := v.Handle(ctx, rc)
 		if err != nil {
 			errs = append(errs, err)
 		}

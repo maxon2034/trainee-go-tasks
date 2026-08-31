@@ -11,11 +11,11 @@ type CompositeHandler struct {
 
 func (c *CompositeHandler) Enabled(ctx context.Context, l slog.Level) bool {
 	for _, v := range c.handlers {
-		if !v.Enabled(ctx, l) {
-			return false
+		if v.Enabled(ctx, l) {
+			return true
 		}
 	}
-	return true
+	return false
 }
 
 func (c *CompositeHandler) Handle(ctx context.Context, r slog.Record) error {

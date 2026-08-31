@@ -6,11 +6,11 @@ import (
 )
 
 type CompositeHandler struct {
-	Handlers []slog.Handler
+	handlers []slog.Handler
 }
 
 func (c *CompositeHandler) Enabled(ctx context.Context, l slog.Level) bool {
-	for _, v := range c.Handlers {
+	for _, v := range c.handlers {
 		if !v.Enabled(ctx, l) {
 			return false
 		}
@@ -19,7 +19,7 @@ func (c *CompositeHandler) Enabled(ctx context.Context, l slog.Level) bool {
 }
 
 func (c *CompositeHandler) Handle(ctx context.Context, r slog.Record) error {
-	for _, v := range c.Handlers {
+	for _, v := range c.handlers {
 		err := v.Handle(ctx, r)
 		if err != nil {
 			return err
@@ -29,15 +29,15 @@ func (c *CompositeHandler) Handle(ctx context.Context, r slog.Record) error {
 }
 
 func (c *CompositeHandler) WithAttrs(attrs []slog.Attr) slog.Handler {
-	for i, v := range c.Handlers {
-		c.Handlers[i] = v.WithAttrs(attrs)
+	for i, v := range c.handlers {
+		c.handlers[i] = v.WithAttrs(attrs)
 	}
 	return c
 }
 
 func (c *CompositeHandler) WithGroup(name string) slog.Handler {
-	for i, v := range c.Handlers {
-		c.Handlers[i] = v.WithGroup(name)
+	for i, v := range c.handlers {
+		c.handlers[i] = v.WithGroup(name)
 	}
 	return c
 }

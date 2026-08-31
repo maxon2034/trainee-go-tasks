@@ -26,6 +26,9 @@ func (c *CompositeHandler) Enabled(ctx context.Context, l slog.Level) bool {
 func (c *CompositeHandler) Handle(ctx context.Context, r slog.Record) error {
 	var errs []error
 	for _, v := range c.handlers {
+		if !v.Enabled(ctx, r.Level) {
+			continue
+		}
 		err := v.Handle(ctx, r)
 		if err != nil {
 			errs = append(errs, err)

@@ -2,6 +2,7 @@ package slogutil
 
 import (
 	"context"
+	"errors"
 	"log/slog"
 )
 
@@ -23,13 +24,14 @@ func (c *CompositeHandler) Enabled(ctx context.Context, l slog.Level) bool {
 }
 
 func (c *CompositeHandler) Handle(ctx context.Context, r slog.Record) error {
+	var errs []error
 	for _, v := range c.handlers {
 		err := v.Handle(ctx, r)
 		if err != nil {
-			return err
+			errs = append(errs, err)
 		}
 	}
-	return nil
+	return errors.Join(errs...)
 }
 
 func (c *CompositeHandler) WithAttrs(attrs []slog.Attr) slog.Handler {

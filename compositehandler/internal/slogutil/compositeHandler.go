@@ -10,6 +10,10 @@ type CompositeHandler struct {
 }
 
 func (c *CompositeHandler) Enabled(ctx context.Context, l slog.Level) bool {
+	if ctx == nil {
+		ctx = context.Background()
+	}
+
 	for _, v := range c.handlers {
 		if v.Enabled(ctx, l) {
 			return true

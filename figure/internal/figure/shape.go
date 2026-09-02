@@ -20,16 +20,16 @@ func CalcArea(s Shape) (float64, error) {
 
 	switch *shape {
 	case "circle":
-		v := s.(Circle)
+		c := s.(Circle)
 
 		if *radius < 0 {
 			return 0, fmt.Errorf("Error: wrong radius parameter")
 		}
 
-		v.Set(*radius)
-		return v.Area(), nil
+		c.Set(*radius)
+		return c.Area(), nil
 	case "rectangle":
-		v := s.(Rectangle)
+		r := s.(Rectangle)
 
 		if *width < 0 {
 			return 0, fmt.Errorf("Error: wrong width parameter")
@@ -39,8 +39,8 @@ func CalcArea(s Shape) (float64, error) {
 			return 0, fmt.Errorf("Error: wrong height parameter")
 		}
 
-		v.Set(*width, *height)
-		return v.Area(), nil
+		r.Set(*width, *height)
+		return r.Area(), nil
 	default:
 		return 0, fmt.Errorf("unknown shape")
 	}

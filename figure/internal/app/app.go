@@ -7,8 +7,8 @@ import (
 )
 
 func Run() {
-	c := figure.Rectangle{}
-	res, err := figure.CalcArea(c)
+	r := figure.Rectangle{}
+	res, err := figure.CalcArea(r)
 	if err != nil {
 		fmt.Println(err)
 		return

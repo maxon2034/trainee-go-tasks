@@ -1,15 +1,7 @@
 package slogutil
 
-import (
-	"io"
-	"log/slog"
-)
+import "log/slog"
 
-func NewLogger(w io.Writer) *slog.Logger {
-	var c CompositeHandler
-	jsonHandler := slog.NewJSONHandler(w, nil)
-	textHandler := slog.NewTextHandler(w, nil)
-	c.Add(jsonHandler)
-	c.Add(textHandler)
-	return slog.New(&c)
+func NewLogger(handlers ...slog.Handler) slog.Logger {
+	return *slog.New(NewCompositeHandler(handlers...))
 }

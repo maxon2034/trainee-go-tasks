@@ -1,13 +1,20 @@
 package figure
 
-import "math"
+import (
+	"fmt"
+	"math"
+)
 
 type Circle struct {
 	radius float64
 }
 
-func (c *Circle) Set(r float64) {
-	c.radius = r
+func NewCircle(r float64) (Circle, error) {
+	if r <= 0 {
+		return Circle{}, fmt.Errorf("wrong params: radius = %f", r)
+	}
+
+	return Circle{radius: r}, nil
 }
 
 func (c Circle) Area() float64 {

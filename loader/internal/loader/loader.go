@@ -39,7 +39,7 @@ func DownloadFile(fileURL, fileName string) error {
 		if errors.As(err, &netErr) {
 			return ErrConnectionFailed
 		}
-		return fmt.Errorf("Error in downloading file: %w", err)
+		return fmt.Errorf("error in requesting file: %w", err)
 	}
 	defer resp.Body.Close()
 

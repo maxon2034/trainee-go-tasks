@@ -2,10 +2,12 @@ package loader
 
 import (
 	"errors"
+	"fmt"
 	"io"
 	"net"
 	"net/http"
 	"os"
+	"time"
 )
 
 var (
@@ -20,6 +22,10 @@ func DownloadFile(fileURL, fileName string) error {
 		return ErrInvalidURL
 	}
 
+	client := &http.Client{
+		Timeout: 5 * time.Second,
+	}
+
 	req, err := http.NewRequest(http.MethodGet, fileURL, nil)
 	if err != nil {
 		return ErrInvalidURL
@@ -27,13 +33,13 @@ func DownloadFile(fileURL, fileName string) error {
 
 	req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)")
 
-	resp, err := http.DefaultClient.Do(req)
+	resp, err := client.Do(req)
 	if err != nil {
 		var netErr net.Error
 		if errors.As(err, &netErr) {
 			return ErrConnectionFailed
 		}
-		return ErrInvalidURL
+		return fmt.Errorf("Error in downloading file: %w", err)
 	}
 	defer resp.Body.Close()
 
@@ -46,7 +52,7 @@ func DownloadFile(fileURL, fileName string) error {
 
 	file, err := os.Create(fileName)
 	if err != nil {
-		return io.ErrUnexpectedEOF
+		return ErrDownloadFailed
 	}
 	defer file.Close()
 
